@@ -20,6 +20,8 @@ class Goal(models.Model):
 
     description = models.TextField()
 
+    complete = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(auto_now=True)
 
     updated_at = models.DateTimeField(auto_now=True)
@@ -28,5 +30,5 @@ class Goal(models.Model):
 
     parent_goal = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='sub_goals')
 
-    def __str__(self):
-        return self.name
+    """ def __str__(self):
+        return self.name """
