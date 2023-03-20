@@ -23,7 +23,6 @@ class ChatGPTView(APIView):
             other_goals_descriptions = ''
             for other_goal in other_goals:
                 other_goals_descriptions += other_goal.description + '\n'
-            print(other_goals_descriptions)
             prompt = 'Break down the following goal for learning ' + \
                 skill_name + ' into no more than 5 sub-goals:' + goal + '\n' + \
                 'If the goal recommends making projects, give some project recommendations. The goals you suggest cannot be the same or similar to these other goals you have already suggested: ' + '\n' + other_goals_descriptions
@@ -36,8 +35,6 @@ class ChatGPTView(APIView):
             stop=None,
         )
         response = completion.choices[0].text
-        print(response)
         responseSplit = re.split(r"\n\d[.]", response)[1:]
-        print(responseSplit)
         data = {'response': responseSplit}
         return Response(data, status=status.HTTP_200_OK)

@@ -7,10 +7,16 @@ from .serializers import GoalSerializer, SkillSerializer
 
 class GoalView(APIView):
     def get(self, request):
-        skill = request.GET.get('skill')
-        goals = Goal.objects.filter(skill=skill).distinct()
+        skill = request.GET.get('skill', None)
+        if skill: 
+            goals = Goal.objects.filter(skill=skill, skill__user=request.user).distinct()
+        else:
+            skills = Skill.objects.filter(user=request.user).values_list('pk', flat=True)
+            goals = Goal.objects.filter(skill__in=skills).distinct()
         serializer = GoalSerializer(goals, many=True)
         return Response(serializer.data)
+
+
 
     def post(self, request):
         data = request.data
