@@ -35,7 +35,6 @@ class GoalView(APIView):
         data = request.data
         new_goals = data['goals']
         goals = []
-        print(new_goals)
         for new_goal in new_goals:
             goal_id = int(new_goal['id'])
             goal = get_object_or_404(Goal, id=goal_id)
